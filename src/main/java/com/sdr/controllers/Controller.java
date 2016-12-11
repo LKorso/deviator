@@ -1,15 +1,23 @@
 package com.sdr.controllers;
 
-import com.sdr.SimpleRExample;
-import javafx.scene.control.Label;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 
 public class Controller {
-    public Label label;
+    public Stage distributionWindow;
 
-    private SimpleRExample rRunner = new SimpleRExample();
+    public void showDistributionGenerationWindow() throws IOException{
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/distributionWindow.fxml"));
 
-    public void getMEAN(){
-        label.setText("MEAN: " + rRunner.calculateMEAN());
+        distributionWindow = new Stage();
+        distributionWindow.initModality(Modality.APPLICATION_MODAL);
+        distributionWindow.setScene(new Scene(root));
+        distributionWindow.showAndWait();
     }
 }
