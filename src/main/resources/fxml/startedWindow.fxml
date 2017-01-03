@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="400.0" maxWidth="750.0" minHeight="400.0" minWidth="750.0" prefHeight="400.0" prefWidth="750.0" style="-fx-pref-width: 750; -fx-pref-height: 400;"
+            xmlns="http://javafx.com/javafx/8.0.92"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.sdr.controllers.MainController">
+   <children>
+      <Pane prefHeight="400.0" prefWidth="600.0" style="-fx-pref-width: 750; -fx-pref-height: 400;">
+         <children>
+            <Pane fx:id="topPane" prefHeight="108.0" prefWidth="600.0" style="-fx-background-color: #8BC34A; -fx-pref-width: 760;">
+               <children>
+                  <Label layoutX="14.0" layoutY="20.0" text="Deviator" textFill="WHITE">
+                     <font>
+                        <Font name="Roboto" size="57.0" />
+                     </font>
+                  </Label>
+               </children>
+               <effect>
+                  <DropShadow blurType="GAUSSIAN" height="23.93" radius="10.7325" />
+               </effect>
+            </Pane>
+            <Label layoutX="112.0" layoutY="281.0" text="Load data from file" textFill="#212121">
+               <font>
+                  <Font name="Roboto Medium" size="21.0" />
+               </font>
+            </Label>
+            <Label layoutX="112.0" layoutY="320.0" text="Choose the file with data from your system " textFill="#757575">
+               <font>
+                  <Font name="Roboto" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="112.0" layoutY="151.0" text="Generate distributions" textFill="#212121">
+               <font>
+                  <Font name="Roboto Medium" size="21.0" />
+               </font>
+            </Label>
+            <Label layoutX="112.0" layoutY="190.0" text="Choose distribution type and generate it with your settings" textFill="#757575">
+               <font>
+                  <Font name="Roboto" size="17.0" />
+               </font>
+            </Label>
+            <JFXButton fx:id="loadButton" buttonType="RAISED" layoutX="600.0" layoutY="293.0" prefWidth="114.0" style="-fx-background-color: #FFC107; -fx-pref-height: 36; -fx-min-width: 88;" text="LOAD" textFill="WHITE">
+               <font>
+                  <Font name="Roboto Bold" size="18.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="chooseButton" onAction="#showDistributionGenerationWindow" buttonType="RAISED" layoutX="600.0" layoutY="158.0" prefWidth="114.0" style="-fx-background-color: #FFC107; -fx-pref-height: 36; -fx-min-width: 88;" text="CHOOSE" textFill="WHITE">
+               <font>
+                  <Font name="Roboto Bold" size="18.0" />
+               </font>
+            </JFXButton>
+            <FontAwesomeIconView fill="#757575" glyphName="FILE_TEXT" layoutX="31.0" layoutY="324.0" size="36.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+            <FontAwesomeIconView fill="#757575" glyphName="AREA_CHART" layoutX="25.0" layoutY="194.0" size="36.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+            <Line endX="760.0" layoutY="246.0" startX="0" stroke="#bdbdbd" strokeWidth="0.5" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
