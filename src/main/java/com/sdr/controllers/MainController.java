@@ -1,34 +1,61 @@
 package com.sdr.controllers;
 
-import javafx.application.Application;
+import com.sdr.domain.Distribution;
+import com.sdr.repository.RepositoryFactory;
+import com.sdr.services.DistributionService;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import javax.naming.ldap.Control;
-import java.io.IOException;
+import java.io.File;
 
 
-public class MainController{
+public class MainController extends ControllerHelper{
 
-    public Button chooseButton;
+    @FXML
+    private Button chooseButton;
+
+    @FXML
+    private Button loadButton;
+
     private Stage distributionWindow;
-    private Parent root;
+    private FileChooser fileChooser;
+    private DistributionService distributionService;
 
     public void showDistributionGenerationWindow(){
-        showWindow("/fxml/distributionWindow.fxml", "Distribution generator");
+        final FXMLLoader loader = getLoader("/fxml/distributionGeneratorWindow.fxml");
+        showWindow("Distribution generator");
     }
 
-    private void showWindow(String windowFilePath, String title) {
-        try {
-            root = FXMLLoader.load(getClass().getResource(windowFilePath));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void showMainInfoWindow() {
+        final Distribution selectedDistribution = loadDistributionFromFile();
+        final FXMLLoader loader = getLoader("/fxml/distributionMainInfoWindow.fxml");
+        final DistributionMainInfoController controller = loader.<DistributionMainInfoController>getController();
+        controller.initializeData(selectedDistribution);
+        showWindow("D");
+    }
 
+    private Distribution loadDistributionFromFile() {
+        fileChooser = configureFileChooser();
+        final File selectedFile = fileChooser.showOpenDialog(distributionWindow);
+        distributionService = new DistributionService(RepositoryFactory.getReposytory(RepositoryFactory.IN_MEMORY));
+        return distributionService.readFromFile(selectedFile);
+    }
+
+    private FileChooser configureFileChooser() {
+        final FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose file with data");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Excel files", "*.xlsx")
+        );
+        return fileChooser;
+    }
+
+    private void showWindow(String title) {
         distributionWindow = new Stage();
         distributionWindow.initModality(Modality.APPLICATION_MODAL);
         distributionWindow.setScene(new Scene(root));

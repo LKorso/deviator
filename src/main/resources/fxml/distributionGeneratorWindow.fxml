@@ -10,29 +10,29 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="400.0" maxWidth="750.0" minHeight="400.0" minWidth="750.0" prefHeight="400.0" prefWidth="750.0" style="-fx-pref-width: 750; -fx-pref-height: 400;             " xmlns="http://javafx.com/javafx/8.0.92" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="400.0" maxWidth="750.0" minHeight="400.0" minWidth="750.0" prefHeight="400.0" prefWidth="750.0" style="-fx-pref-width: 750; -fx-pref-height: 400;             " xmlns="http://javafx.com/javafx/8.0.92" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sdr.controllers.DistributionGeneratorController">
   <children>
     <Pane prefHeight="400.0" prefWidth="600.0" style="-fx-pref-width: 750; -fx-pref-height: 400;">
          <children>
             <Line endX="300.0" endY="400" layoutX="-63.0" layoutY="1.0" startX="300.0" startY="0" stroke="#bdbdbd" strokeWidth="0.5" />
-            <JFXTextField focusColor="#8bc34a" labelFloat="true" layoutX="314.0" layoutY="64.0" maxWidth="363.0" minWidth="363.0" prefHeight="30.0" prefWidth="363.0" promptText="Observation number" unFocusColor="#757575">
+            <JFXTextField fx:id="number" focusColor="#8bc34a" labelFloat="true" layoutX="314.0" layoutY="64.0" maxWidth="363.0" minWidth="363.0" prefHeight="30.0" prefWidth="363.0" promptText="Observation number" unFocusColor="#757575">
                <font>
                   <Font name="Roboto" size="21.0" />
                </font></JFXTextField>
-           <JFXTextField focusColor="#8bc34a" labelFloat="true" layoutX="314.0" layoutY="142.0" maxWidth="363.0" minWidth="363.0" prefHeight="30.0" prefWidth="363.0" promptText="Standart deviation" unFocusColor="#757575">
+           <JFXTextField fx:id="sd" focusColor="#8bc34a" labelFloat="true" layoutX="314.0" layoutY="216.0" maxWidth="363.0" minWidth="363.0" prefHeight="30.0" prefWidth="363.0" promptText="Standart deviation" unFocusColor="#757575">
              <font>
                <Font name="Roboto" size="21.0" />
              </font></JFXTextField>
-           <JFXTextField focusColor="#8bc34a" labelFloat="true" layoutX="314.0" layoutY="222.0" maxWidth="363.0" minWidth="363.0" prefHeight="30.0" prefWidth="363.0" promptText="Mean" unFocusColor="#757575">
+           <JFXTextField fx:id="mean" focusColor="#8bc34a" labelFloat="true" layoutX="314.0" layoutY="137.0" maxWidth="363.0" minWidth="363.0" prefHeight="30.0" prefWidth="363.0" promptText="Mean" unFocusColor="#757575">
              <font>
                <Font name="Roboto" size="21.0" />
              </font></JFXTextField>
-            <JFXCheckBox checkedColor="#8bc34a" layoutX="314.0" layoutY="295.0" mnemonicParsing="false" text="Sorted" textFill="#212121" unCheckedColor="#757575">
+            <JFXCheckBox fx:id="sorted" checkedColor="#8bc34a" layoutX="314.0" layoutY="295.0" mnemonicParsing="false" text="Sorted" textFill="#212121" unCheckedColor="#757575">
                <font>
                   <Font name="Roboto" size="17.0" />
                </font>
             </JFXCheckBox>
-           <JFXButton buttonType="RAISED" layoutX="552.0" layoutY="322.0" prefWidth="125.0" style="-fx-background-color: #FFC107; -fx-pref-height: 36; -fx-min-width: 88;" text="GENERATE" textFill="WHITE">
+           <JFXButton fx:id="generateButton" buttonType="RAISED" layoutX="552.0" layoutY="322.0" onAction="#processGenerateButton" prefWidth="125.0" style="-fx-background-color: #FFC107; -fx-pref-height: 36; -fx-min-width: 88;" text="GENERATE" textFill="WHITE">
              <font>
                <Font name="Roboto Bold" size="18.0" />
              </font>

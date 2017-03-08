@@ -1,0 +1,11 @@
+.jfx-tab-pane .tab-header-area .jfx-rippler{
+    -fx-rippler-fill: #388E3C;
+}
+
+.jfx-tab-pane .tab-header-background{
+    -fx-background-color: #4CAF50;
+}
+
+.default-color0.chart-series-line {
+    -fx-stroke: #388E3C;
+}
