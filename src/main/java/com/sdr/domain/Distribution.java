@@ -4,6 +4,7 @@ import lombok.Data;
 import org.rosuda.JRI.Rengine;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
@@ -18,7 +19,7 @@ public class Distribution {
     private static final String STANDARD_DEVIATION_SCRIPT = "sd(%s, na.rm = FALSE)";
     private static final String PROBABILITY_SCRIPT = "dnorm(%s, mean = %s, sd = %s)";
 
-    private static long idGenerator = 0;
+    private static Long idGenerator = new Long(0);
 
     private Long id;
     private Long observationNumber;
@@ -78,6 +79,31 @@ public class Distribution {
                 .of(rEngine.eval(setUpDistributionScript()).asDoubleArray())
                 .mapToObj(Double::valueOf)
                 .collect(Collectors.toList());
+    }
+
+    public List<Double> trim(double minValue, double maxValue) {
+        if (!sorted) {
+            sort();
+        }
+        int startIndex = 0;
+        for (int i = 0; i < values.size(); i++) {
+            if (values.get(i) >= minValue) {
+                startIndex = i;
+                break;
+            }
+        }
+        int endIndex = values.size() - 1;
+        for (int i = values.size() - 1; i > startIndex; i--) {
+            if (values.get(i) <= maxValue) {
+                endIndex = i;
+                break;
+            }
+        }
+        return values.subList(startIndex, endIndex);
+    }
+
+    public void sort() {
+        Collections.sort(values);
     }
 
     private void calcualteProbability() {
