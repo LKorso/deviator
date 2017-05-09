@@ -52,8 +52,7 @@ public class DistributionGeneratorController extends ControllerHelper {
 
     private void showWindow(String windowFilePath, String title, Distribution distribution) {
         final FXMLLoader loader = getLoader(windowFilePath);
-        DistributionMainInfoController controller =
-                loader.<DistributionMainInfoController>getController();
+        DistributionMainInfoController controller = loader.<DistributionMainInfoController>getController();
         controller.initializeData(distribution);
         window = new Stage();
         window.setScene(new Scene(root, 1366, 700));

@@ -5,10 +5,13 @@ import com.sdr.domain.Distribution;
 import com.sdr.repository.RepositoryFactory;
 import com.sdr.services.DistributionService;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -60,6 +63,17 @@ public class DistributionMainInfoController extends ControllerHelper {
         );
         final File saveFile = fileChooser.showSaveDialog(new Stage());
         service.saveToFile(currentDistribution, saveFile);
+    }
+
+    public void showInvestigationSettingsWindow() {
+        final FXMLLoader loader = getLoader("/fxml/investigationSettingsWindow.fxml");
+        InvestigationSettingsController controller = loader.<InvestigationSettingsController>getController();
+        controller.initializeData();
+        final Stage distributionWindow = new Stage();
+        distributionWindow.initModality(Modality.APPLICATION_MODAL);
+        distributionWindow.setScene(new Scene(root));
+        distributionWindow.setTitle("Investigation settings");
+        distributionWindow.showAndWait();
     }
 
     public void initializeData(Distribution distribution) {

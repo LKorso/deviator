@@ -19,7 +19,6 @@ public class DistributionService {
 
     public Distribution createDistribution(Long observationNumber, Double mean, Double standardDeviation, boolean sorted) {
         Distribution distribution = new Distribution(observationNumber, mean, standardDeviation, sorted);
-        distribution.calculateDistribution();
         return distribution;
     }
 

@@ -67,6 +67,7 @@ public class Distribution {
         }
         return standardDeviation;
     }
+
     public List<Double> getProbability() {
         if(probability == null) {
             calcualteProbability();
@@ -74,36 +75,15 @@ public class Distribution {
         return  probability;
     }
 
-    public void calculateDistribution() {
+    public void sort() {
+        Collections.sort(values);
+    }
+
+    private void calculateDistribution() {
         values = DoubleStream
                 .of(rEngine.eval(setUpDistributionScript()).asDoubleArray())
                 .mapToObj(Double::valueOf)
                 .collect(Collectors.toList());
-    }
-
-    public List<Double> trim(double minValue, double maxValue) {
-        if (!sorted) {
-            sort();
-        }
-        int startIndex = 0;
-        for (int i = 0; i < values.size(); i++) {
-            if (values.get(i) >= minValue) {
-                startIndex = i;
-                break;
-            }
-        }
-        int endIndex = values.size() - 1;
-        for (int i = values.size() - 1; i > startIndex; i--) {
-            if (values.get(i) <= maxValue) {
-                endIndex = i;
-                break;
-            }
-        }
-        return values.subList(startIndex, endIndex);
-    }
-
-    public void sort() {
-        Collections.sort(values);
     }
 
     private void calcualteProbability() {

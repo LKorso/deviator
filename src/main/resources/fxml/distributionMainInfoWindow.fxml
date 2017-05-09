@@ -3,7 +3,6 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.chart.AreaChart?>
-<?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Label?>
@@ -14,83 +13,111 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="700.0" maxWidth="1366.0" minHeight="700.0" minWidth="1366.0" prefHeight="700.0" prefWidth="1366" style="-fx-pref-width: 1366; -fx-pref-height: 700; -fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.92" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sdr.controllers.DistributionMainInfoController">
-   <children>
-      <Label fx:id="sd" layoutX="166.0" layoutY="82.0" prefHeight="20.0" prefWidth="154.0" textFill="#212121">
-         <font>
-            <Font name="Roboto" size="17.0" />
-         </font>
-      </Label>
-      <Label layoutX="166.0" layoutY="109.0" text="Standart deviation" textFill="#757575">
-         <font>
-            <Font name="Roboto" size="15.0" />
-         </font>
-      </Label>
-      <Label fx:id="mean" layoutX="353.0" layoutY="80.0" prefHeight="25.0" prefWidth="92.0" textFill="#212121">
-         <font>
-            <Font name="Roboto" size="17.0" />
-         </font>
-      </Label>
-      <Label layoutX="353.0" layoutY="109.0" text="Mean" textFill="#757575">
-         <font>
-            <Font name="Roboto" size="15.0" />
-         </font>
-      </Label>
-      <ListView fx:id="distributionValues" layoutY="22.0" prefHeight="684.0" prefWidth="154.0" />
-      <Separator layoutX="774.0" layoutY="22.0" orientation="VERTICAL" prefHeight="678.0" prefWidth="11.0" />
-      <LineChart fx:id="distributionChart" layoutX="787.0" layoutY="66.0" prefHeight="278.0" prefWidth="574.0" stylesheets="@../css/style.css">
-        <xAxis>
-          <NumberAxis side="BOTTOM" fx:id="xAxis" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis fx:id="yAxis" side="LEFT" />
-        </yAxis>
-      </LineChart>
-      <Label layoutX="166.0" layoutY="47.0" text="Main information" textFill="#212121">
-         <font>
-            <Font name="Roboto Medium" size="21.0" />
-         </font>
-      </Label>
-      <Pane prefHeight="25.0" prefWidth="1373.0" style="-fx-background-color: #689F38;">
-         <effect>
-            <DropShadow blurType="GAUSSIAN" height="23.93" radius="10.7325" />
-         </effect>
-      </Pane>
-      <Label layoutX="993.0" layoutY="35.0" text="Distribution chart" textFill="#212121">
-         <font>
-            <Font name="Roboto Medium" size="21.0" />
-         </font>
-      </Label>
-      <Label layoutX="993.0" layoutY="352.0" text="Probability function" textFill="#212121">
-         <font>
-            <Font name="Roboto Medium" size="21.0" />
-         </font>
-      </Label>
-      <Separator layoutX="156.0" layoutY="157.0" prefHeight="4.0" prefWidth="618.0" />
-      <Separator layoutX="156.0" layoutY="260.0" prefHeight="4.0" prefWidth="618.0" />
-      <Label layoutX="227.0" layoutY="180.0" text="Save to file" textFill="#212121">
-         <font>
-            <Font name="Roboto Medium" size="21.0" />
-         </font>
-      </Label>
-      <Label layoutX="227.0" layoutY="219.0" text="Select file to save current distribution" textFill="#757575">
-         <font>
-            <Font name="Roboto" size="17.0" />
-         </font>
-      </Label>
-      <FontAwesomeIconView fill="#757575" glyphName="FILE_TEXT" layoutX="166.0" layoutY="223.0" size="36.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-      <JFXButton fx:id="saveButton" onAction="#saveButtonHendler" buttonType="RAISED" layoutX="600.0" layoutY="187.0" prefWidth="114.0" style="-fx-background-color: #FFC107; -fx-pref-height: 36; -fx-min-width: 88;" text="SAVE" textFill="WHITE">
-         <font>
-            <Font name="Roboto Bold" size="18.0" />
-         </font>
-      </JFXButton>
-      <AreaChart fx:id="probabilityChart" layoutX="788.0" layoutY="383.0" prefHeight="303.0" prefWidth="574.0">
-        <xAxis>
-          <NumberAxis fx:id="xProbability" side="BOTTOM" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis fx:id="yProbability" side="LEFT" />
-        </yAxis>
-      </AreaChart>
-   </children>
+<AnchorPane maxHeight="700.0" maxWidth="1366.0" minHeight="700.0" minWidth="1366.0" prefHeight="700.0" prefWidth="1366"
+            style="-fx-pref-width: 1366; -fx-pref-height: 700; -fx-background-color: #FFFFFF;"
+            xmlns="http://javafx.com/javafx/8.0.92" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.sdr.controllers.DistributionMainInfoController">
+    <children>
+        <Label fx:id="sd" layoutX="166.0" layoutY="82.0" prefHeight="20.0" prefWidth="154.0" textFill="#212121">
+            <font>
+                <Font name="Roboto" size="17.0"/>
+            </font>
+        </Label>
+        <Label layoutX="166.0" layoutY="109.0" text="Standart deviation" textFill="#757575">
+            <font>
+                <Font name="Roboto" size="15.0"/>
+            </font>
+        </Label>
+        <Label fx:id="mean" layoutX="353.0" layoutY="80.0" prefHeight="25.0" prefWidth="92.0" textFill="#212121">
+            <font>
+                <Font name="Roboto" size="17.0"/>
+            </font>
+        </Label>
+        <Label layoutX="353.0" layoutY="109.0" text="Mean" textFill="#757575">
+            <font>
+                <Font name="Roboto" size="15.0"/>
+            </font>
+        </Label>
+        <ListView fx:id="distributionValues" layoutY="22.0" prefHeight="684.0" prefWidth="154.0"/>
+        <Separator layoutX="774.0" layoutY="22.0" orientation="VERTICAL" prefHeight="678.0" prefWidth="11.0"/>
+        <LineChart fx:id="distributionChart" layoutX="787.0" layoutY="66.0" prefHeight="278.0" prefWidth="574.0"
+                   stylesheets="@../css/style.css">
+            <xAxis>
+                <NumberAxis side="BOTTOM" fx:id="xAxis"/>
+            </xAxis>
+            <yAxis>
+                <NumberAxis fx:id="yAxis" side="LEFT"/>
+            </yAxis>
+        </LineChart>
+        <Label layoutX="166.0" layoutY="47.0" text="Main information" textFill="#212121">
+            <font>
+                <Font name="Roboto Medium" size="21.0"/>
+            </font>
+        </Label>
+        <Pane prefHeight="25.0" prefWidth="1373.0" style="-fx-background-color: #689F38;">
+            <effect>
+                <DropShadow blurType="GAUSSIAN" height="23.93" radius="10.7325"/>
+            </effect>
+        </Pane>
+        <Label layoutX="993.0" layoutY="35.0" text="Distribution chart" textFill="#212121">
+            <font>
+                <Font name="Roboto Medium" size="21.0"/>
+            </font>
+        </Label>
+        <Label layoutX="993.0" layoutY="352.0" text="Probability function" textFill="#212121">
+            <font>
+                <Font name="Roboto Medium" size="21.0"/>
+            </font>
+        </Label>
+        <Separator layoutX="154.0" layoutY="152.0" prefHeight="4.0" prefWidth="618.0"/>
+        <Separator layoutX="154.0" layoutY="255.0" prefHeight="4.0" prefWidth="618.0"/>
+        <Label layoutX="225.0" layoutY="175.0" text="Experimenal mode" textFill="#212121">
+            <font>
+                <Font name="Roboto Medium" size="21.0"/>
+            </font>
+        </Label>
+        <Label layoutX="225.0" layoutY="214.0" text="Ivestigate the deviation and methods" textFill="#757575">
+            <font>
+                <Font name="Roboto" size="17.0"/>
+            </font>
+        </Label>
+        <FontAwesomeIconView fill="#757575" glyphName="PIE_CHART" layoutX="164.0" layoutY="218.0" size="36.0"
+                             strokeType="OUTSIDE" strokeWidth="0.0"/>
+        <JFXButton fx:id="saveButton" buttonType="RAISED" layoutX="593.0" layoutY="296.0" onAction="#saveButtonHendler"
+                   prefWidth="139.0" style="-fx-background-color: #FFC107; -fx-pref-height: 36; -fx-min-width: 88;"
+                   text="SAVE" textFill="WHITE">
+            <font>
+                <Font name="Roboto Bold" size="18.0"/>
+            </font>
+        </JFXButton>
+        <Separator layoutX="154.0" layoutY="364.0" prefHeight="4.0" prefWidth="618.0"/>
+        <Label layoutX="225.0" layoutY="284.0" text="Save to file" textFill="#212121">
+            <font>
+                <Font name="Roboto Medium" size="21.0"/>
+            </font>
+        </Label>
+        <Label layoutX="225.0" layoutY="323.0" text="Select file to save current distribution" textFill="#757575">
+            <font>
+                <Font name="Roboto" size="17.0"/>
+            </font>
+        </Label>
+        <FontAwesomeIconView fill="#757575" glyphName="FILE_TEXT" layoutX="164.0" layoutY="327.0" size="36.0"
+                             strokeType="OUTSIDE" strokeWidth="0.0"/>
+        <JFXButton fx:id="investigeteButton" buttonType="RAISED" layoutX="593.0" layoutY="182.0"
+                   onAction="#showInvestigationSettingsWindow" prefWidth="139.0"
+                   style="-fx-background-color: #FFC107; -fx-pref-height: 36; -fx-min-width: 88;" text="INVESTIGATE"
+                   textFill="WHITE">
+            <font>
+                <Font name="Roboto Bold" size="18.0"/>
+            </font>
+        </JFXButton>
+        <AreaChart fx:id="probabilityChart" layoutX="788.0" layoutY="383.0" prefHeight="303.0" prefWidth="574.0">
+            <xAxis>
+                <NumberAxis side="BOTTOM" fx:id="xProbability"/>
+            </xAxis>
+            <yAxis>
+                <NumberAxis fx:id="yProbability" side="LEFT"/>
+            </yAxis>
+        </AreaChart>
+    </children>
 </AnchorPane>

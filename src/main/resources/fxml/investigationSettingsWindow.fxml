@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="400.0" maxWidth="750.0" minHeight="400.0" minWidth="750.0" prefHeight="400.0" prefWidth="750.0"
+            style="-fx-pref-width: 750; -fx-pref-height: 400;             " xmlns="http://javafx.com/javafx/8.0.92"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sdr.controllers.InvestigationSettingsController">
+    <children>
+        <Pane prefHeight="400.0" prefWidth="600.0" style="-fx-pref-width: 750; -fx-pref-height: 400;">
+            <children>
+                <JFXCheckBox fx:id="subOservationsCheck" checkedColor="#8bc34a" layoutX="14.0" layoutY="116.0"
+                             mnemonicParsing="false" text="Sub-observations" textFill="#212121"
+                             unCheckedColor="#757575">
+                    <font>
+                        <Font name="Roboto" size="17.0"/>
+                    </font>
+                </JFXCheckBox>
+                <JFXTextField fx:id="startValueField" focusColor="#8bc34a" labelFloat="true" layoutX="14.0"
+                              layoutY="57.0" maxWidth="363.0" minWidth="262.0" prefHeight="45.0" prefWidth="308.0"
+                              promptText="Start value" unFocusColor="#757575">
+                    <font>
+                        <Font name="Roboto" size="21.0"/>
+                    </font>
+                </JFXTextField>
+                <JFXTextField fx:id="endValueField" focusColor="#8bc34a" labelFloat="true" layoutX="398.0"
+                              layoutY="57.0" maxWidth="363.0" minWidth="262.0" prefHeight="45.0" prefWidth="308.0"
+                              promptText="End value" unFocusColor="#757575">
+                    <font>
+                        <Font name="Roboto" size="21.0"/>
+                    </font>
+                </JFXTextField>
+                <JFXTextField fx:id="subNumberField" focusColor="#8bc34a" labelFloat="true" layoutX="14.0"
+                              layoutY="155.0" maxWidth="363.0" minWidth="262.0" prefHeight="45.0" prefWidth="308.0"
+                              promptText="Sub-observation number" unFocusColor="#757575">
+                    <font>
+                        <Font name="Roboto" size="21.0"/>
+                    </font>
+                </JFXTextField>
+                <JFXTextField fx:id="subCoefficientField" focusColor="#8bc34a" labelFloat="true" layoutX="398.0"
+                              layoutY="155.0" maxWidth="363.0" minWidth="262.0" prefHeight="45.0" prefWidth="308.0"
+                              promptText="Values coefficient" unFocusColor="#757575">
+                    <font>
+                        <Font name="Roboto" size="21.0"/>
+                    </font>
+                </JFXTextField>
+                <Separator layoutX="7.0" layoutY="104.0" prefHeight="4.0" prefWidth="736.0"/>
+                <Separator layoutX="7.0" layoutY="220.0" prefHeight="4.0" prefWidth="736.0"/>
+                <JFXCheckBox fx:id="splitCheck" checkedColor="#8bc34a" layoutX="14.0" layoutY="14.0"
+                             mnemonicParsing="false" text="Split" textFill="#212121" unCheckedColor="#757575">
+                    <font>
+                        <Font name="Roboto" size="17.0"/>
+                    </font>
+                </JFXCheckBox>
+                <Label layoutX="31.0" layoutY="232.0" text="Choose the criteria to detect outliers" textFill="#757575">
+                    <font>
+                        <Font name="Roboto" size="17.0"/>
+                    </font>
+                </Label>
+                <JFXButton fx:id="investigeteButton" onAction="#processInvestigation" buttonType="RAISED" layoutX="532.0" layoutY="322.0" prefWidth="145.0"
+                           style="-fx-background-color: #FFC107; -fx-pref-height: 36; -fx-min-width: 88;"
+                           text="INVESTIGATE" textFill="WHITE">
+                    <font>
+                        <Font name="Roboto Bold" size="18.0"/>
+                    </font>
+                </JFXButton>
+                <ChoiceBox fx:id="criteriaChoiceBox" layoutX="31.0" layoutY="275.0" prefHeight="25.0"
+                           prefWidth="274.0"/>
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>
