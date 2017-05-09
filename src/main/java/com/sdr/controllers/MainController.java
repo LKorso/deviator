@@ -10,10 +10,11 @@ import javafx.scene.control.Button;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 
-
+@Component
 public class MainController extends ControllerHelper{
 
     @FXML

@@ -7,7 +7,9 @@ import com.sdr.checkers.DeviationCheckers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import org.springframework.stereotype.Component;
 
+@Component
 public class InvestigationSettingsController {
 
     @FXML

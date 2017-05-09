@@ -10,7 +10,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DistributionGeneratorController extends ControllerHelper {
 
     @FXML

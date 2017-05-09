@@ -13,10 +13,12 @@ import javafx.scene.control.ListView;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.util.List;
 
+@Component
 public class DistributionMainInfoController extends ControllerHelper {
 
     @FXML
