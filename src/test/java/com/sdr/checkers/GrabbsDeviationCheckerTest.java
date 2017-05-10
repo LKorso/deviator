@@ -11,8 +11,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.sdr.checkers.DeviationChecker;
-import com.sdr.checkers.GrabbsDeviationChecker;
 import com.sdr.domain.Distribution;
 
 class GrabbsDeviationCheckerTest {

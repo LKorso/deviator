@@ -19,7 +19,7 @@ public class Distribution {
     private static final String STANDARD_DEVIATION_SCRIPT = "sd(%s, na.rm = FALSE)";
     private static final String PROBABILITY_SCRIPT = "dnorm(%s, mean = %s, sd = %s)";
 
-    private static Long idGenerator = new Long(0);
+    private static Long idGenerator = 0L;
 
     private Long id;
     private Long observationNumber;
