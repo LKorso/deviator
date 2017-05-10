@@ -1,11 +1,10 @@
 package com.sdr.checkers;
 
-import com.sdr.domain.Distribution;
-
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Properties;
+
+import com.sdr.domain.Distribution;
 
 public class GrabbsDeviationChecker implements DeviationChecker {
 
@@ -29,11 +28,11 @@ public class GrabbsDeviationChecker implements DeviationChecker {
     private double calculateS(final Distribution distribution) {
         final List<Double> values = distribution.getValues();
         final double mean = distribution.getMean();
-        double sumOfDiffrenteSquare = values
+        double sumOfDifferentSquare = values
                 .stream()
                 .map(v -> Math.pow((v - mean), 2))
                 .reduce(0.0, Double::sum);
-        return Math.sqrt(sumOfDiffrenteSquare / (values.size() - 1));
+        return Math.sqrt(sumOfDifferentSquare / (values.size() - 1));
     }
 
     private double defineGr(final int size) {
