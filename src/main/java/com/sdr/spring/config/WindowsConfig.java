@@ -7,10 +7,11 @@ import com.sdr.controllers.MainController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -60,6 +61,9 @@ public class WindowsConfig {
         return (MainController) getStartedWindow().getController();
     }
 
+    @Autowired
+    private Image mainIcon;
+
     protected Window loadWindow(String url) throws IOException {
         InputStream fxmlStream = null;
         try {
@@ -96,6 +100,7 @@ public class WindowsConfig {
         public void initializeStage(Modality modality) {
             stage = new Stage();
             stage.setScene(new Scene(view));
+            stage.getIcons().add(mainIcon);
             stage.initModality(modality);
         }
     }

@@ -56,6 +56,7 @@ public class MainController extends ControllerHelper {
         controller.initializeData();
         if (mainInfoWindow.getStage() == null) mainInfoWindow.initializeStage(Modality.APPLICATION_MODAL);
         mainInfoWindow.getStage().setTitle("Distribution");
+        mainInfoWindow.getStage().setOnCloseRequest(event -> controller.onClose());
         mainInfoWindow.getStage().showAndWait();
     }
 

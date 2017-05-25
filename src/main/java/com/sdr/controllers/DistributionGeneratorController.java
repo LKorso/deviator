@@ -64,6 +64,7 @@ public class DistributionGeneratorController extends ControllerHelper {
         controller.initializeData();
         if (mainInfoWindow.getStage() == null) mainInfoWindow.initializeStage(Modality.WINDOW_MODAL);
         mainInfoWindow.getStage().setTitle(title);
+        mainInfoWindow.getStage().setOnCloseRequest(event -> controller.onClose());
         mainInfoWindow.getStage().show();
     }
 }

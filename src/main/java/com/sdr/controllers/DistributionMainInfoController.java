@@ -106,4 +106,10 @@ public class DistributionMainInfoController extends ControllerHelper {
         distributionChart.getData().add(distributionSeries);
         probabilityChart.getData().add(probabilitySeries);
     }
+
+    public void onClose() {
+        distributionChart.getData().clear();
+        probabilityChart.getData().clear();
+        distributionValues.getItems().clear();
+    }
 }
