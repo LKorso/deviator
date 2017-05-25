@@ -1,21 +1,20 @@
 package com.sdr.controllers;
 
 import com.sdr.domain.Distribution;
-import com.sdr.repository.RepositoryFactory;
 import com.sdr.services.DistributionService;
+import com.sdr.spring.config.WindowsConfig;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
-import javafx.stage.Stage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
 
 @Component
-public class MainController extends ControllerHelper{
+public class MainController extends ControllerHelper {
 
     @FXML
     private Button chooseButton;
@@ -23,28 +22,41 @@ public class MainController extends ControllerHelper{
     @FXML
     private Button loadButton;
 
-    private Stage distributionWindow;
+    @Autowired
+    @Qualifier("distributionMainInfoWindow")
+    private WindowsConfig.Window mainInfoWindow;
+
+    @Autowired
+    @Qualifier("distributionGeneratorWindow")
+    private WindowsConfig.Window generationWindow;
+
+    @Autowired
+    private DistributionMainInfoController distributionMainInfoController;
+
     private FileChooser fileChooser;
+
+    @Autowired
     private DistributionService distributionService;
 
-    public void showDistributionGenerationWindow(){
-        final FXMLLoader loader = getLoader("/fxml/distributionGeneratorWindow.fxml");
-        showWindow("Distribution generator");
+    public void showDistributionGenerationWindow() {
+        if (generationWindow.getStage() == null) {
+            generationWindow.initializeStage(Modality.APPLICATION_MODAL);
+        }
+        generationWindow.getStage().setTitle("Distribution generator");
+        generationWindow.getStage().showAndWait();
     }
 
-    public void showMainInfoWindow() {
-        final Distribution selectedDistribution = loadDistributionFromFile();
-        final FXMLLoader loader = getLoader("/fxml/distributionMainInfoWindow.fxml");
-        final DistributionMainInfoController controller = loader.<DistributionMainInfoController>getController();
-        controller.initializeData(selectedDistribution);
-        showWindow("D");
-    }
-
-    private Distribution loadDistributionFromFile() {
+    public void showMainInfoWindow() throws Exception {
         fileChooser = configureFileChooser();
-        final File selectedFile = fileChooser.showOpenDialog(distributionWindow);
-        distributionService = new DistributionService(RepositoryFactory.getReposytory(RepositoryFactory.IN_MEMORY));
-        return distributionService.readFromFile(selectedFile);
+        final File selectedFile = fileChooser.showOpenDialog(mainInfoWindow.getStage());
+        final Distribution currentDistribution = distributionService.readFromFile(selectedFile);
+        distributionService.saveDistribution(currentDistribution);
+        distributionService.changeCurrentDistribution(currentDistribution);
+        DistributionMainInfoController controller = (DistributionMainInfoController) mainInfoWindow.getController();
+        controller.initializeData();
+        if (mainInfoWindow.getStage() == null) mainInfoWindow.initializeStage(Modality.APPLICATION_MODAL);
+        mainInfoWindow.getStage().setTitle("Distribution");
+        mainInfoWindow.getStage().showAndWait();
     }
 
     private FileChooser configureFileChooser() {
@@ -54,13 +66,5 @@ public class MainController extends ControllerHelper{
                 new FileChooser.ExtensionFilter("Excel files", "*.xlsx")
         );
         return fileChooser;
-    }
-
-    private void showWindow(String title) {
-        distributionWindow = new Stage();
-        distributionWindow.initModality(Modality.APPLICATION_MODAL);
-        distributionWindow.setScene(new Scene(root));
-        distributionWindow.setTitle(title);
-        distributionWindow.showAndWait();
     }
 }

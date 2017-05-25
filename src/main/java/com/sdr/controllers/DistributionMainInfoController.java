@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.sdr.domain.Distribution;
 import com.sdr.repository.RepositoryFactory;
 import com.sdr.services.DistributionService;
+import com.sdr.spring.config.WindowsConfig;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,8 +14,12 @@ import javafx.scene.control.ListView;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.io.File;
 import java.util.List;
 
@@ -50,12 +55,15 @@ public class DistributionMainInfoController extends ControllerHelper {
 
     private XYChart.Series<Integer, Double> distributionSeries;
     private XYChart.Series<Double, Double> probabilitySeries;
-    private DistributionService service;
-    private Distribution currentDistribution;
 
-    public DistributionMainInfoController() {
-        service = new DistributionService(RepositoryFactory.getReposytory(RepositoryFactory.IN_MEMORY));
-    }
+    @Autowired
+    private DistributionService service;
+
+    @Autowired
+    @Qualifier("investigationSettingsWindow")
+    private WindowsConfig.Window investigetionWindow;
+
+    private Distribution currentDistribution;
 
     public void saveButtonHendler() {
         final FileChooser fileChooser = new FileChooser();
@@ -68,20 +76,18 @@ public class DistributionMainInfoController extends ControllerHelper {
     }
 
     public void showInvestigationSettingsWindow() {
-        final FXMLLoader loader = getLoader("/fxml/investigationSettingsWindow.fxml");
-        InvestigationSettingsController controller = loader.<InvestigationSettingsController>getController();
+        InvestigationSettingsController controller =
+                (InvestigationSettingsController) investigetionWindow.getController();
         controller.initializeData();
-        final Stage distributionWindow = new Stage();
-        distributionWindow.initModality(Modality.APPLICATION_MODAL);
-        distributionWindow.setScene(new Scene(root));
-        distributionWindow.setTitle("Investigation settings");
-        distributionWindow.showAndWait();
+        if (investigetionWindow.getStage() == null) investigetionWindow.initializeStage(Modality.APPLICATION_MODAL);
+        investigetionWindow.getStage().setTitle("Investigation settings");
+        investigetionWindow.getStage().showAndWait();
     }
 
-    public void initializeData(Distribution distribution) {
-        currentDistribution = distribution;
-        sd.setText(distribution.getStandardDeviation().toString());
-        mean.setText(distribution.getMean().toString());
+    public void initializeData() {
+        currentDistribution = service.getCurrentDistribution();
+        sd.setText(currentDistribution.getStandardDeviation().toString());
+        mean.setText(currentDistribution.getMean().toString());
         yAxis.setAutoRanging(true);
         yAxis.setForceZeroInRange(false);
         xAxis.setAutoRanging(true);
@@ -90,8 +96,8 @@ public class DistributionMainInfoController extends ControllerHelper {
         yProbability.setAutoRanging(true);
         distributionSeries = new XYChart.Series();
         probabilitySeries = new XYChart.Series();
-        List<Double> values = distribution.getValues();
-        List<Double> probability = distribution.getProbability();
+        List<Double> values = currentDistribution.getValues();
+        List<Double> probability = currentDistribution.getProbability();
         for (int i = 0; i < values.size(); i++) {
             distributionValues.getItems().add(values.get(i));
             distributionSeries.getData().add(new XYChart.Data<>(i, values.get(i)));

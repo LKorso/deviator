@@ -7,4 +7,8 @@ public interface DistributionRository {
     void save(Distribution distribution);
 
     Distribution getByIdentifier(String identifier);
+
+    void changeCurrentId(Long newId);
+
+    Distribution getByCurrentId();
 }

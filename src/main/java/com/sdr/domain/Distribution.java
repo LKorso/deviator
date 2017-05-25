@@ -2,7 +2,6 @@ package com.sdr.domain;
 
 import lombok.Data;
 import org.rosuda.JRI.Rengine;
-
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
@@ -18,6 +17,7 @@ public class Distribution {
     private static final String MEAN_SCRIPT = "mean(%s)";
     private static final String STANDARD_DEVIATION_SCRIPT = "sd(%s, na.rm = FALSE)";
     private static final String PROBABILITY_SCRIPT = "dnorm(%s, mean = %s, sd = %s)";
+
 
     private static Long idGenerator = new Long(0);
 

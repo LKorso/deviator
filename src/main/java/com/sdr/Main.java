@@ -1,20 +1,29 @@
 package com.sdr;
 
+import com.sdr.spring.config.WindowsConfig;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Lazy;
 
+@Lazy
 @SpringBootApplication
 public class Main extends Application {
 
     private ConfigurableApplicationContext context;
-    private Parent root;
+
+    @Autowired
+    private Image mainIcon;
+
+    @Autowired
+    @Qualifier("startedWindow")
+    private WindowsConfig.Window window;
 
     public static void main(String[] args) {
         Application.launch(args);
@@ -24,16 +33,13 @@ public class Main extends Application {
     public void init() throws Exception {
         context = SpringApplication.run(getClass());
         context.getAutowireCapableBeanFactory().autowireBean(this);
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/startedWindow.fxml"));
-        fxmlLoader.setControllerFactory(context::getBean);
-        root = fxmlLoader.load();
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception{
         primaryStage.setTitle("Deviator");
-        primaryStage.getIcons().add(new Image("main_icon.png"));
-        primaryStage.setScene(new Scene(root, 750, 400));
+        primaryStage.getIcons().add(mainIcon);
+        primaryStage.setScene(new Scene(window.getView(), 750, 400));
         primaryStage.setResizable(false);
         primaryStage.show();
     }

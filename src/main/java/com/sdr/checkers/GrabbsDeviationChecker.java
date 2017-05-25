@@ -1,20 +1,18 @@
 package com.sdr.checkers;
 
 import com.sdr.domain.Distribution;
+import com.sdr.spring.annotations.InjectProperties;
+import org.springframework.stereotype.Component;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Properties;
 
+@Component
 public class GrabbsDeviationChecker implements DeviationChecker {
 
+    @InjectProperties("coeffisients/coef_grabbs.properties")
     private Properties coefficients;
-
-    public GrabbsDeviationChecker() throws Exception {
-        coefficients = new Properties();
-        coefficients.load(new FileInputStream("coeffisients/coef_grabbs.properties"));
-    }
 
     @Override
     public boolean isDeviation(final int index, final Distribution distribution) {

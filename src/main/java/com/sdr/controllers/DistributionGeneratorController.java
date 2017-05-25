@@ -3,13 +3,15 @@ package com.sdr.controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.sdr.domain.Distribution;
-import com.sdr.repository.RepositoryFactory;
 import com.sdr.services.DistributionService;
+import com.sdr.spring.config.WindowsConfig;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -29,13 +31,18 @@ public class DistributionGeneratorController extends ControllerHelper {
 
     @FXML
     private JFXButton generateButton;
+
+    @Autowired
     private DistributionService distributionService;
-    private Stage window;
+
+    @Autowired
+    @Qualifier("distributionMainInfoWindow")
+    private WindowsConfig.Window mainInfoWindow;
 
     public void processGenerateButton() {
-        distributionService = new DistributionService(RepositoryFactory.getReposytory(RepositoryFactory.IN_MEMORY));
         Distribution currentDistribution = createDistribution();
         distributionService.saveDistribution(currentDistribution);
+        distributionService.changeCurrentDistribution(currentDistribution);
         showWindow(
                 "/fxml/distributionMainInfoWindow.fxml",
                 "Normal Distribution",
@@ -53,12 +60,10 @@ public class DistributionGeneratorController extends ControllerHelper {
     }
 
     private void showWindow(String windowFilePath, String title, Distribution distribution) {
-        final FXMLLoader loader = getLoader(windowFilePath);
-        DistributionMainInfoController controller = loader.<DistributionMainInfoController>getController();
-        controller.initializeData(distribution);
-        window = new Stage();
-        window.setScene(new Scene(root, 1366, 700));
-        window.setTitle(title);
-        window.show();
+        DistributionMainInfoController controller = (DistributionMainInfoController) mainInfoWindow.getController();
+        controller.initializeData();
+        if (mainInfoWindow.getStage() == null) mainInfoWindow.initializeStage(Modality.WINDOW_MODAL);
+        mainInfoWindow.getStage().setTitle(title);
+        mainInfoWindow.getStage().show();
     }
 }

@@ -1,21 +1,24 @@
 package com.sdr.services;
 
-import com.sdr.repository.DistributionRository;
 import com.sdr.domain.Distribution;
+import com.sdr.repository.DistributionRository;
 import com.sdr.repository.FileDistributionRepository;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.io.File;
+import java.io.*;
+import java.util.Properties;
 
+@Service
 public class DistributionService {
 
+    @Autowired
     private DistributionRository distributionRository;
+
+    @Autowired
     private FileDistributionRepository fileRepository;
 
-    public DistributionService(DistributionRository distributionRository) {
-        this.distributionRository = distributionRository;
-        fileRepository = new FileDistributionRepository();
-    }
+    private Properties temp;
 
     public Distribution createDistribution(Long observationNumber, Double mean, Double standardDeviation, boolean sorted) {
         Distribution distribution = new Distribution(observationNumber, mean, standardDeviation, sorted);
@@ -36,5 +39,13 @@ public class DistributionService {
 
     public void saveToFile(Distribution distribution, File file){
         fileRepository.save(distribution, file);
+    }
+
+    public Distribution getCurrentDistribution(){
+        return distributionRository.getByCurrentId();
+    }
+
+    public void changeCurrentDistribution(Distribution distribution) {
+        distributionRository.changeCurrentId(distribution.getId());
     }
 }
