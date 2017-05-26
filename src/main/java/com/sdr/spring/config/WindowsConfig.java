@@ -1,9 +1,6 @@
 package com.sdr.spring.config;
 
-import com.sdr.controllers.DistributionGeneratorController;
-import com.sdr.controllers.DistributionMainInfoController;
-import com.sdr.controllers.InvestigationSettingsController;
-import com.sdr.controllers.MainController;
+import com.sdr.controllers.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -23,22 +20,22 @@ public class WindowsConfig {
 
     @Bean(name = "startedWindow")
     public Window getStartedWindow() throws IOException {
-        return loadWindow("fxml/startedWindow.fxml");
+        return loadWindow("fxml/startedWindow.fxml", null);
     }
 
     @Bean(name = "distributionGeneratorWindow")
     public Window getDistributionGeneratorWindow() throws IOException {
-        return loadWindow("fxml/distributionGeneratorWindow.fxml");
+        return loadWindow("fxml/distributionGeneratorWindow.fxml", "Distribution generator");
     }
 
     @Bean(name = "distributionMainInfoWindow")
     public Window getDistributionMainInfoWindow() throws IOException {
-        return loadWindow("fxml/distributionMainInfoWindow.fxml");
+        return loadWindow("fxml/distributionMainInfoWindow.fxml", "Distribution");
     }
 
     @Bean(name = "investigationSettingsWindow")
     public Window getInvestigationSettingsWindow() throws IOException {
-        return loadWindow("fxml/investigationSettingsWindow.fxml");
+        return loadWindow("fxml/investigationSettingsWindow.fxml", "Investigation settings");
     }
 
     @Bean
@@ -64,15 +61,15 @@ public class WindowsConfig {
     @Autowired
     private Image mainIcon;
 
-    protected Window loadWindow(String url) throws IOException {
+    protected Window loadWindow(String url, String title) throws IOException {
         InputStream fxmlStream = null;
         try {
             fxmlStream = getClass().getClassLoader().getResourceAsStream(url);
             FXMLLoader loader = new FXMLLoader();
             loader.load(fxmlStream);
             Parent view = loader.getRoot();
-            Object controller = loader.getController();
-            return new Window(view, controller);
+            BasicController controller = loader.getController();
+            return new Window(view, controller, title);
         } finally {
             if (fxmlStream != null) {
                 fxmlStream.close();
@@ -83,25 +80,35 @@ public class WindowsConfig {
     @Data
     public class Window {
         private Parent view;
-        private Object controller;
+        private BasicController controller;
         private Stage stage;
         private String title;
 
-        public Window(Parent view, Object controller) {
+        public Window(Parent view, BasicController controller, String title) {
             this.view = view;
             this.controller = controller;
-        }
-
-        public Window(Parent view, Object controller, String title) {
-            this(view, controller);
             this.title = title;
         }
 
-        public void initializeStage(Modality modality) {
+        public void initializeStage() {
             stage = new Stage();
             stage.setScene(new Scene(view));
             stage.getIcons().add(mainIcon);
-            stage.initModality(modality);
+            stage.setTitle(title);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setOnCloseRequest(event -> controller.onClose());
+        }
+
+        public void showWindow() {
+            if (stage == null) initializeStage();
+            controller.initializeData();
+            stage.show();
+        }
+
+        public void showAndWait() {
+            if (stage == null) initializeStage();
+            controller.initializeData();
+            stage.showAndWait();
         }
     }
 }

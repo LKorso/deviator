@@ -6,7 +6,6 @@ import com.sdr.spring.config.WindowsConfig;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -14,7 +13,7 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 
 @Component
-public class MainController extends ControllerHelper {
+public class MainController extends BasicController {
 
     @FXML
     private Button chooseButton;
@@ -39,33 +38,22 @@ public class MainController extends ControllerHelper {
     private DistributionService distributionService;
 
     public void showDistributionGenerationWindow() {
-        if (generationWindow.getStage() == null) {
-            generationWindow.initializeStage(Modality.APPLICATION_MODAL);
-        }
-        generationWindow.getStage().setTitle("Distribution generator");
-        generationWindow.getStage().showAndWait();
+        generationWindow.showAndWait();
     }
 
     public void showMainInfoWindow() throws Exception {
-        fileChooser = configureFileChooser();
-        final File selectedFile = fileChooser.showOpenDialog(mainInfoWindow.getStage());
-        final Distribution currentDistribution = distributionService.readFromFile(selectedFile);
+        final Distribution currentDistribution = distributionService.readFromFile(chooseFile());
         distributionService.saveDistribution(currentDistribution);
         distributionService.changeCurrentDistribution(currentDistribution);
-        DistributionMainInfoController controller = (DistributionMainInfoController) mainInfoWindow.getController();
-        controller.initializeData();
-        if (mainInfoWindow.getStage() == null) mainInfoWindow.initializeStage(Modality.APPLICATION_MODAL);
-        mainInfoWindow.getStage().setTitle("Distribution");
-        mainInfoWindow.getStage().setOnCloseRequest(event -> controller.onClose());
-        mainInfoWindow.getStage().showAndWait();
+        mainInfoWindow.showAndWait();
     }
 
-    private FileChooser configureFileChooser() {
+    private File chooseFile() {
         final FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose file with data");
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("Excel files", "*.xlsx")
         );
-        return fileChooser;
+        return fileChooser.showOpenDialog(mainInfoWindow.getStage());
     }
 }

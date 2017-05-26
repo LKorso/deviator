@@ -1,30 +1,26 @@
 package com.sdr.controllers;
 
-import com.jfoenix.controls.JFXButton;
 import com.sdr.domain.Distribution;
-import com.sdr.repository.RepositoryFactory;
 import com.sdr.services.DistributionService;
 import com.sdr.spring.config.WindowsConfig;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.chart.*;
+import javafx.scene.chart.AreaChart;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.io.File;
 import java.util.List;
 
 @Component
-public class DistributionMainInfoController extends ControllerHelper {
+public class DistributionMainInfoController extends BasicController {
 
     @FXML
     private ListView<Double> distributionValues;
@@ -76,14 +72,10 @@ public class DistributionMainInfoController extends ControllerHelper {
     }
 
     public void showInvestigationSettingsWindow() {
-        InvestigationSettingsController controller =
-                (InvestigationSettingsController) investigetionWindow.getController();
-        controller.initializeData();
-        if (investigetionWindow.getStage() == null) investigetionWindow.initializeStage(Modality.APPLICATION_MODAL);
-        investigetionWindow.getStage().setTitle("Investigation settings");
-        investigetionWindow.getStage().showAndWait();
+        investigetionWindow.showAndWait();
     }
 
+    @Override
     public void initializeData() {
         currentDistribution = service.getCurrentDistribution();
         sd.setText(currentDistribution.getStandardDeviation().toString());
@@ -107,6 +99,7 @@ public class DistributionMainInfoController extends ControllerHelper {
         probabilityChart.getData().add(probabilitySeries);
     }
 
+    @Override
     public void onClose() {
         distributionChart.getData().clear();
         probabilityChart.getData().clear();

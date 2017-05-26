@@ -2,6 +2,7 @@ package com.sdr;
 
 import com.sdr.spring.config.WindowsConfig;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -41,6 +42,7 @@ public class Main extends Application {
         primaryStage.getIcons().add(mainIcon);
         primaryStage.setScene(new Scene(window.getView(), 750, 400));
         primaryStage.setResizable(false);
+        primaryStage.setOnCloseRequest(e -> Platform.exit());
         primaryStage.show();
     }
 

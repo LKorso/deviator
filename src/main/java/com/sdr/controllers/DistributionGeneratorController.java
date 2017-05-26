@@ -6,16 +6,13 @@ import com.sdr.domain.Distribution;
 import com.sdr.services.DistributionService;
 import com.sdr.spring.config.WindowsConfig;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.TextField;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DistributionGeneratorController extends ControllerHelper {
+public class DistributionGeneratorController extends BasicController {
 
     @FXML
     private TextField number;
@@ -43,11 +40,7 @@ public class DistributionGeneratorController extends ControllerHelper {
         Distribution currentDistribution = createDistribution();
         distributionService.saveDistribution(currentDistribution);
         distributionService.changeCurrentDistribution(currentDistribution);
-        showWindow(
-                "/fxml/distributionMainInfoWindow.fxml",
-                "Normal Distribution",
-                currentDistribution
-        );
+        mainInfoWindow.showWindow();
     }
 
     private Distribution createDistribution() {
@@ -59,12 +52,4 @@ public class DistributionGeneratorController extends ControllerHelper {
         );
     }
 
-    private void showWindow(String windowFilePath, String title, Distribution distribution) {
-        DistributionMainInfoController controller = (DistributionMainInfoController) mainInfoWindow.getController();
-        controller.initializeData();
-        if (mainInfoWindow.getStage() == null) mainInfoWindow.initializeStage(Modality.WINDOW_MODAL);
-        mainInfoWindow.getStage().setTitle(title);
-        mainInfoWindow.getStage().setOnCloseRequest(event -> controller.onClose());
-        mainInfoWindow.getStage().show();
-    }
 }

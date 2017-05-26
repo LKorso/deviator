@@ -10,7 +10,7 @@ import javafx.scene.control.ChoiceBox;
 import org.springframework.stereotype.Component;
 
 @Component
-public class InvestigationSettingsController {
+public class InvestigationSettingsController extends BasicController{
 
     @FXML
     private ChoiceBox<String> criteriaChoiceBox;
