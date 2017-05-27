@@ -11,7 +11,7 @@ import java.util.Properties;
 @Component
 public class GrabbsDeviationChecker implements DeviationChecker {
 
-    @InjectProperties("coeffisients/coef_grabbs.properties")
+    //@InjectProperties("coeffisients/coef_grabbs.properties")
     private Properties coefficients;
 
     @Override
@@ -27,11 +27,11 @@ public class GrabbsDeviationChecker implements DeviationChecker {
     private double calculateS(final Distribution distribution) {
         final List<Double> values = distribution.getValues();
         final double mean = distribution.getMean();
-        double sumOfDiffrenteSquare = values
+        double sumOfDifferentSquare = values
                 .stream()
                 .map(v -> Math.pow((v - mean), 2))
                 .reduce(0.0, Double::sum);
-        return Math.sqrt(sumOfDiffrenteSquare / (values.size() - 1));
+        return Math.sqrt(sumOfDifferentSquare / (values.size() - 1));
     }
 
     private double defineGr(final int size) {
